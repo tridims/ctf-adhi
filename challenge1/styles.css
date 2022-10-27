@@ -3,17 +3,18 @@
 }
 
 a {
-    color:#242529;
+    color: #1d3557;
     text-decoration: none;
 }
+
 a:visited {
-    color:#242529;
+    color:#457B9D;
     text-decoration: none;
 }
-a:hover {color:#73cee6;}
+a:hover {color:#F1FAEE;}
 
 body {
-    background-image: linear-gradient(to right, #73cee6 , #33778a);
+    background-image: linear-gradient(to right, #457B9D , #A8DADC);
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
@@ -31,7 +32,7 @@ body {
     width: 125px;
     height: 125px;
     display: inline-block;
-    background: #191a1c;
+    background: #1D3557;
     color: #969ea5;
     font-size: 40px;
     text-align: center;
@@ -43,7 +44,7 @@ body {
 
 .numeric:active {
     background: #f0f0f5 !important;
-    color: #191a1c !important;
+    color: #1D3557 !important;
 }
 
 .zero {

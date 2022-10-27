@@ -1,41 +1,44 @@
 <?php
 error_reporting(0);
-isset($_GET['source']) && die(highlight_file(__FILE__));
+isset($_GET['the-source-code']) && die(highlight_file(__FILE__));
 
-function is_safe($query)
+define('ALLOWED_CHARS', '_abcdefghijklmnopqrstuvwxyz0123456789.!^&|+-*/%()[],');
+define('ALLOWED_FUNCTIONS', ['abs', 'acos', 'acosh', 'asin', 'asinh', 'atan2', 'atan', 'atanh', 'base_convert', 'bindec', 'ceil', 'cos', 'cosh', 'decbin', 'dechex', 'decoct', 'deg2rad', 'exp', 'floor', 'fmod', 'getrandmax', 'hexdec', 'hypot', 'is_finite', 'is_infinite', 'is_nan', 'lcg_value', 'log10', 'log', 'max', 'min', 'mt_getrandmax', 'mt_rand', 'octdec', 'pi', 'pow', 'rad2deg', 'rand', 'round', 'sin', 'sinh', 'sqrt', 'srand', 'tan', 'tanh', 'ncr', 'npr', 'number_format']);
+define('REGEX_PATTERN', "/([a-z_]+)/");
+
+$expression_query = $_POST["expression"] ? $_POST["expression"] : null;
+
+function filter_query($query)
 {
   $query = strtolower($query);
-  preg_match_all("/([a-z_]+)/", $query, $words);
+  preg_match_all(REGEX_PATTERN, $query, $words);
   $words = $words[0];
-  $good = ['abs', 'acos', 'acosh', 'asin', 'asinh', 'atan2', 'atan', 'atanh', 'base_convert', 'bindec', 'ceil', 'cos', 'cosh', 'decbin', 'dechex', 'decoct', 'deg2rad', 'exp', 'floor', 'fmod', 'getrandmax', 'hexdec', 'hypot', 'is_finite', 'is_infinite', 'is_nan', 'lcg_value', 'log10', 'log', 'max', 'min', 'mt_getrandmax', 'mt_rand', 'octdec', 'pi', 'pow', 'rad2deg', 'rand', 'round', 'sin', 'sinh', 'sqrt', 'srand', 'tan', 'tanh', 'ncr', 'npr', 'number_format'];
-  $accept_chars = '_abcdefghijklmnopqrstuvwxyz0123456789.!^&|+-*/%()[],';
-  $accept_chars = str_split($accept_chars);
-  $bad = '';
-  for ($i = 0; $i < count($words); $i++) {
-    if (strlen($words[$i]) && array_search($words[$i], $good) === false) {
-      $bad .= $words[$i] . " ";
-    }
+  $allowed_characters = str_split(ALLOWED_CHARS);
+
+  foreach ($words as $word) {
+    if (!(strlen($word) && array_search($words, ALLOWED_FUNCTIONS)))
+      return false;
   }
 
-  for ($i = 0; $i < strlen($query); $i++) {
-    if (array_search($query[$i], $accept_chars) === false) {
-      $bad .= $query[$i] . " ";
-    }
+  for ($i = strlen($query) - 1; $i >= 0; $i--) {
+    if (!(array_search($query[$i], $allowed_characters)))
+      return false;
   }
-  return $bad;
+
+  return true;
 }
 
-function safe_eval($code)
+function evaluate($code)
 {
   if (strlen($code) > 1024) return "Expression too long.";
-  $code = strtolower($code);
-  $bad = is_safe($code);
-  $res = '';
-  if (strlen(str_replace(' ', '', $bad)))
-    $res = "I don't like this: " . $bad;
-  else
+  $save = filter_query($code);
+  if (!$save)
+    return "This looks suspicious : " . $code;
+  else {
+    $res = '';
     eval('$res=' . $code . ";");
-  return $res;
+    return $res;
+  }
 }
 ?>
 
@@ -53,10 +56,10 @@ function safe_eval($code)
 <body>
   <div class="calculator">
     <div class="visor">
-      <div id="accumulator" class="acc"><?= $_GET['expression'] ?? '' ?></div>
+      <div id="accumulator" class="acc"><?= $expression_query ?? '' ?></div>
       <div id="total" class="total">
-        <?php if (isset($_GET['expression'])) : ?>
-          <?= @safe_eval($_GET['expression']) ?>
+        <?php if (isset($expression_query)) : ?>
+          <?= @evaluate($expression_query) ?>
         <?php endif ?>
       </div>
     </div>
@@ -81,7 +84,7 @@ function safe_eval($code)
     <div class="numeric action result" onclick="result()">=</div>
   </div>
 
-  <form hidden id="submit-form">
+  <form hidden id="submit-form" method="POST">
     <input id="input-form" class="input is-large" type="text" name="expression" value="" />
   </form>
 
@@ -90,37 +93,6 @@ function safe_eval($code)
   </div>
 </body>
 
-<script>
-  let saveAction
-
-  const MAX_VISOR = 50
-
-  if (document.getElementById('accumulator').innerHTML === '') {
-    cleanAll()
-  }
-
-  function addElement(element) {
-
-    if (document.getElementById("total").innerHTML.length < MAX_VISOR) {
-      document.getElementById("total").innerHTML += element
-    }
-  }
-
-  function wrapExpression(element1, element2) {
-    document.getElementById("total").innerHTML = element1 + document.getElementById("total").innerHTML + element2
-  }
-
-  function cleanAll() {
-    document.getElementById("total").innerHTML = ""
-    document.getElementById("accumulator").innerHTML = ""
-  }
-
-  function result() {
-    let expression = document.getElementById("total").innerHTML
-    console.log(expression)
-    document.getElementById("input-form").value = expression
-    document.getElementById("submit-form").submit()
-  }
-</script>
+<script type="text/javascript" src="./calculator.js"></script>
 
 </html>
