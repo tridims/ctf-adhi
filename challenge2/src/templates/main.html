@@ -1,0 +1,14 @@
+{% extends "base.html" %} {% block title %}Resource Page{% endblock %} {% block
+content %} {% if error %}
+<p align="center">There is an error : {{ error }}</p>
+{% endif %}
+
+<h1 align="center">Welcome {{ user.email }}</h1>
+<p>Nice, you successfully logged in !</p>
+
+<h1 align="center">Your Flag</h1>
+<p>
+  {% if flag %} {{ flag }} {% else %} You don't have that permission yet! Good
+  luck.{% endif %}
+</p>
+{% endblock %}
