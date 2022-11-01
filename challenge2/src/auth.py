@@ -36,7 +36,7 @@ def main_page():
 
             return render_template('main.html', user=user, flag=flag)
         else:
-            return redirect("/")
+            return render_template('index.html')
 
 
 @app.route('/logout')
