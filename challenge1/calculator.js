@@ -24,7 +24,6 @@ function cleanAll() {
 
 function result() {
   let expression = document.getElementById("total").innerHTML;
-  console.log(expression);
   document.getElementById("input-form").value = expression;
   document.getElementById("submit-form").submit();
 }
