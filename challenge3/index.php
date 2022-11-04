@@ -49,7 +49,7 @@ $notes = preg_replace('/hology5.0/', '', htmlspecialchars($_POST['Notes']));
                     <div class="card-content">
                         <h3>Isi Notes : <?= $notes ?></h3><br>
                         <?php if ($notes == 'hology5.0') : ?>
-                            <p>Sudahilah kegalauanmu, mari kita lomba CTF bersamakau!</p>
+                            <p>Sudahilah kegalauanmu, mari kita lomba CTF bersamaku!</p>
                             <?= your_flag() ?>
                         <?php else : ?>
                             <p>Kenanganmu masih terlalu indah untuk diingat</p>
