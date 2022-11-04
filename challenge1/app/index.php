@@ -1,6 +1,5 @@
 <?php
 error_reporting(0);
-isset($_GET['the-source-code']) && die(highlight_file(__FILE__));
 
 define('ALLOWED_CHARS', ' _abcdefghijklmnopqrstuvwxyz0123456789.!^&|+-*/%()[],');
 define('ALLOWED_FUNCTIONS', ['abs', 'acos', 'acosh', 'asin', 'asinh', 'atan2', 'atan', 'atanh', 'base_convert', 'bindec', 'ceil', 'cos', 'cosh', 'decbin', 'dechex', 'decoct', 'deg2rad', 'exp', 'floor', 'fmod', 'getrandmax', 'hexdec', 'hypot', 'is_finite', 'is_infinite', 'is_nan', 'lcg_value', 'log10', 'log', 'max', 'min', 'mt_getrandmax', 'mt_rand', 'octdec', 'pi', 'pow', 'rad2deg', 'rand', 'round', 'sin', 'sinh', 'sqrt', 'srand', 'tan', 'tanh', 'ncr', 'npr', 'number_format']);
