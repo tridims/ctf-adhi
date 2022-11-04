@@ -55,6 +55,7 @@ function evaluate($code)
 </head>
 
 <body>
+  <!-- Kalkulator yang bisa melakukan berbagai fungsi 'abs', 'acosh', 'asin', 'asinh', 'atan2', 'bindec', 'base_convert', 'ceil', 'cos', 'cosh', 'pow', 'rad2deg', 'rand', 'round', 'sin', 'sinh', 'sqrt', 'srand', 'tan', 'tanh', 'ncr', 'npr', 'number_format'-->
   <div class="calculator">
     <div class="visor">
       <div id="accumulator" class="acc"><?= $expression_query ?? '' ?></div>
