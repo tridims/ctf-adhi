@@ -66,7 +66,7 @@ function correct_login()
 
     <?php if (isset($_GET['username']) and isset($_GET['password'])) : ?>
       <div class="columns is-centered">
-        <p>test</p>
+        <p>:)</p>
         <?php if (correct_login()) : ?>
           <p>Selamat!</p>
           <?php die(your_flag()); ?>
