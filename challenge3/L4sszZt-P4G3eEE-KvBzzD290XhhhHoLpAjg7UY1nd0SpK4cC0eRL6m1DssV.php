@@ -11,9 +11,9 @@ function correct_login()
   $username = $_POST['username'];
   $password = $_POST['password'];
 
-  if (sha1($username) === sha1($password)) {
-    return true;
-  }
+  if ($username == $password) return false;
+  if (sha1($username) == sha1($password)) return true;
+
   return false;
 }
 
