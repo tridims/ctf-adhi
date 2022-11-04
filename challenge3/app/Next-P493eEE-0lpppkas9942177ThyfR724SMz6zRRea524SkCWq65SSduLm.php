@@ -41,7 +41,7 @@ if (!isset($_COOKIE['user'])) {
     <h1 id="title">Simple Bad Base64 Encoder</h1>
     <br>
     <p>Just Input your text here</p>
-    <form action="/chall3/Next-P493eEE-0lpppkas9942177ThyfR724SMz6zRRea524SkCWq65SSduLm.php" method="post">
+    <form action="/Next-P493eEE-0lpppkas9942177ThyfR724SMz6zRRea524SkCWq65SSduLm.php" method="post">
     <textarea type="text" name="user"></textarea>
     <input type="submit">
     </form>
