@@ -8,11 +8,11 @@ error_reporting(0);
 
 function correct_login()
 {
-  $username = $_POST['username'];
-  $password = $_POST['password'];
+  $username = (string)$_GET['username'];
+  $password = (string)$_GET['password'];
 
-  if ($username == $password) return false;
-  if (sha1($username) == sha1($password)) return true;
+  if ($username === $password) return false;
+  if (sha1($username) === sha1($password)) return true;
 
   return false;
 }
@@ -42,7 +42,7 @@ function correct_login()
   <div class="container" style="margin-top: 3em; margin-bottom: 3em;">
     <div class="columns is-centered">
       <div class="column is-8-tablet is-8-desktop is-5-widescreen">
-        <form method="post">
+        <form>
           <div class="field">
             <p class="control has-icons-left has-icons-right">
               <input class="input" type="text" placeholder="Username" name="username">
@@ -64,8 +64,9 @@ function correct_login()
       </div>
     </div>
 
-    <?php if (($_POST['username']) && isset($_POST['password'])) : ?>
+    <?php if (isset($_GET['username']) and isset($_GET['password'])) : ?>
       <div class="columns is-centered">
+        <p>test</p>
         <?php if (correct_login()) : ?>
           <p>Selamat!</p>
           <?php die(your_flag()); ?>
