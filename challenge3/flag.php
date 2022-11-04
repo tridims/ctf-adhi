@@ -5,5 +5,3 @@ function your_flag() {
     echo "<br>";
     echo "<!-- /Next-P493eEE-0lpppkas9942177ThyfR724SMz6zRRea524SkCWq65SSduLm.php -->";
 }
-
-?>

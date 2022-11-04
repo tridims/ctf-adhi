@@ -3,34 +3,76 @@ if (isset($_GET['source'])) {
   highlight_file(__FILE__);
   die();
 }
-define('APP_RAN', true);
 require('flag3.php');
+error_reporting(0);
+
+function correct_login()
+{
+  $username = $_POST['username'];
+  $password = $_POST['password'];
+
+  if (sha1($username) === sha1($password)) {
+    return true;
+  }
+  return false;
+}
+
 ?>
+
 <!DOCTYPE html>
+
 <head>
-    <title>Login Page</title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <title>Login Page</title>
 </head>
+
 <body>
   <!--?source-->
-  <h2>Login</h2>
-<?php
-error_reporting(0);
-if (isset($_GET['username']) and isset($_GET['password'])) {
-    $uname = (string)$_GET['username'];
-    $password = (string)$_GET['password'];
+  <section class="hero">
+    <div class="container">
+      <div class="hero-body">
+        <h1 class="title">Another Login Pages</h1>
+      </div>
+    </div>
+  </section>
 
-    if ($uname === $password) {
-        print '';
-    } else if (sha1($uname) === sha1($password)) {
-      die(your_flag());
-    } else {
-        print '<p>Forgot your Password? <a href="https://www.youtube.com/watch?v=BBJa32lCaaY">Here</a></p>';
-    }
-}
-?>
-<form method="get">
-    <input type="text" name="username" Placeholder="Enter your Username"/>
-    <input type="password" name="password" Placeholder="Enter your Password"/>
-    <input type="submit">
-</form>
+
+  <div class="container" style="margin-top: 3em; margin-bottom: 3em;">
+    <div class="columns is-centered">
+      <div class="column is-8-tablet is-8-desktop is-5-widescreen">
+        <form method="post">
+          <div class="field">
+            <p class="control has-icons-left has-icons-right">
+              <input class="input" type="text" placeholder="Username" name="username">
+              <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+              </span>
+            </p>
+          </div>
+          <div class="field">
+            <p class="control has-icons-left">
+              <input class="input" type="password" placeholder="Password" name="password">
+              <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+              </span>
+            </p>
+          </div>
+          <input class="button" type="submit" value="Sign In">
+        </form>
+      </div>
+    </div>
+
+    <?php if (($_POST['username']) && isset($_POST['password'])) : ?>
+      <div class="columns is-centered">
+        <?php if (correct_login()) : ?>
+          <p>Selamat!</p>
+          <?php die(your_flag()); ?>
+        <?php else : ?>
+          <p>Forgot your Password? <a href="https://www.youtube.com/watch?v=BBJa32lCaaY">Here</a></p>
+        <?php endif; ?>
+      </div>
+    <?php endif; ?>
+  </div>
 </body>
